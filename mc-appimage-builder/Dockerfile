@@ -1,61 +1,56 @@
+# Official Qt installer is based on https://github.com/rabits/dockerfiles
+
+
 FROM ubuntu:14.04
 
 MAINTAINER Alexander Sashnov "sashnov@ngs.ru"
 
-ENV     QT_VERSION      5.9.6
-
-
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV HOME    /home/ubuntu
+ENV QT_VERSION  5.9.6
+ENV QT_PATH /opt/Qt
+ENV QT_DESKTOP $QT_PATH/${QT_VERSION}/gcc_64
 
+ENV PATH    $QT_DESKTOP/bin:$PATH
+ENV HOME    /home/ubuntu
 WORKDIR     /home/ubuntu
 
-
-# Production:
-#RUN apt-get update && apt-get install -y \
-#    wget \
-# && rm -rf /var/lib/apt/lists/*
-
-# Test:
-RUN apt-get update && apt-get install -y \
-    apt-file \
-    wget \
-    libfreetype6 \
+# Install updates & requirements:
+#  * git, openssh-client, ca-certificates - clone & build
+#  * locales, sudo - useful to set utf-8 locale & sudo usage
+#  * curl - to download Qt bundle
+#  * build-essential, pkg-config, libgl1-mesa-dev - basic Qt build requirements
+#  * libsm6, libice6, libxext6, libxrender1, libfontconfig1, libdbus-1-3 - dependencies of the Qt bundle run-file
+RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends \
+    git \
+    openssh-client \
+    ca-certificates \
+    locales \
+    sudo \
+    curl \
+    build-essential \
+    pkg-config \
+    libgl1-mesa-dev \
+    libsm6 \
+    libice6 \
+    libxext6 \
+    libxrender1 \
     libfontconfig1 \
-    libx11-6 \
-    libx11-xcb1 \
- && apt-file update
+    libdbus-1-3
 
+COPY extract-qt-installer.sh /tmp/qt/
 
+# Download & unpack Qt toolchains & clean
+# Note curl -4 option: this is workaround for 'unable to resolve host' in ubuntu:14.04 container
+RUN curl -4 -Lo /tmp/qt/installer.run "https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run" \
+    && QT_CI_PACKAGES=qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 /tmp/qt/extract-qt-installer.sh /tmp/qt/installer.run "$QT_PATH" \
+    && find "$QT_PATH" -mindepth 1 -maxdepth 1 ! -name "${QT_VERSION}" -exec echo 'Cleaning Qt SDK: {}' \; -exec rm -r '{}' \; \
+    && rm -rf /tmp/qt
 
-# Download Qt online installer and let Docker cache that filesystem layer to avoid loading it again (31 Mb)
-# This is good for debugging as I'm going to run 'docker build' over and over again
-# but for production we don't need this layer and will combine those commands in one RUN:
-#  ---------------------
-#RUN wget https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run && \
-#    chmod +x qt-unified-linux-x64-online.run
-COPY qt-unified-linux-x64-online.run .
+# Reconfigure locale
+RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
+# Add group & user + sudo
+RUN groupadd -r ubuntu && useradd --create-home --gid ubuntu ubuntu && echo 'ubuntu ALL=NOPASSWD: ALL' > /etc/sudoers.d/ubuntu
 
-# We put volatile elements inside to leverate Docker cache
-
-# TESTONLY:
-ENV QT_CI_JUST_DO_LIST_PACKAGES 1
-
-ENV     QT_CI_PACKAGES  list of packages to be filled
-
-# copy command follows after first RUN to invalidate Docker layers cache starting from here when we change the script file
-COPY qt-install.js /home/ubuntu/
-
-# RUN ./qt-unified-linux-x64-online.run --platform minimal --script qt-install.js
-
-# RUN rm -f qt-unified-linux-x64-online.run
-#  ---------------------
-
-
-# COPY scripts /scripts
-# COPY start.sh /
-# ENTRYPOINT ["/start.sh"]
-
-CMD ["/bin/bash"]
+USER ubuntu
