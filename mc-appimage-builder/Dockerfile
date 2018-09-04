@@ -66,11 +66,12 @@ RUN curl -4 -LO "https://github.com/linuxdeploy/linuxdeploy/releases/download/co
     mv squashfs-root linuxdeploy-x86_64.AppDir && \
     chown -R ubuntu:ubuntu linuxdeploy-x86_64.AppDir
 
-
 # fixme: put to common packages list above (here just to leverage Docker build cache)
 RUN apt-get install -y libusb-1.0-0-dev
 
 RUN apt-get install -y libdbus-1-dev  # that's too old for Qt 5.9.6 - doesn't link
+
+RUN apt-get install -y libcairo2     # needed for appimagetool
 
 
 # dirty hack. Probably it's better try to switch on rhel7 template which is officially supported by Qt 5.9.6:
@@ -79,7 +80,5 @@ RUN apt-get install -y libdbus-1-dev  # that's too old for Qt 5.9.6 - doesn't li
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/xenial.list && \
     apt-get update && \
     apt-get install -y libdbus-1-3 git
-
-# 'appimagetool' will be downloaded during build process by appimage_functions.sh, no need to download here
 
 # USER ubuntu
