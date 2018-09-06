@@ -34,6 +34,8 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     build-essential \
     pkg-config \
     libcairo2 \
+    libegl1-mesa \
+    libfuse2 \
     libgl1-mesa-dev \
     libsm6 \
     libice6 \
@@ -41,7 +43,9 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     libxrender1 \
     libfontconfig1 \
     libdbus-1-3 \
-    libusb-1.0-0-dev
+    libusb-1.0-0-dev \
+    libxi6
+
 
 COPY extract-qt-installer.sh /tmp/qt/
 
@@ -58,24 +62,29 @@ RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 # Add group & user + sudo
 RUN groupadd -r ubuntu && useradd --create-home --gid ubuntu ubuntu && echo 'ubuntu ALL=NOPASSWD: ALL' > /etc/sudoers.d/ubuntu
 
+# dirty hack. Probably it's better try to switch on rhel7 template which is officially supported by Qt 5.9.6:
+# https://wiki.qt.io/Qt_5.9_Tools_and_Versions
+# For QtDBus.so libdbus 1.3 is needed.
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/xenial.list && \
+    apt-get update && \
+    apt-get install -y libdbus-1-3
 
-# FIXME: put it in a list afterwards: (do not change the order now to leverage 'docker build' cache)
-RUN apt-get install -y libfuse2
 
-# get linuxdeploy's AppImage
+# Inside Docker fuse mount will not work, so extract AppImages:
+# https://github.com/AppImage/AppImageKit/issues/405
+
+# get linuxdeploy
 RUN curl -4 -LO "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" && \
     chmod +x linuxdeploy-x86_64.AppImage && \
     ./linuxdeploy-x86_64.AppImage --appimage-extract && \
     rm -f linuxdeploy-x86_64.AppImage && \
-    mv squashfs-root linuxdeploy-x86_64.AppDir && \
-    chown -R ubuntu:ubuntu linuxdeploy-x86_64.AppDir
+    mv squashfs-root linuxdeploy-x86_64.AppDir
 
-
-# dirty hack. Probably it's better try to switch on rhel7 template which is officially supported by Qt 5.9.6:
-# https://wiki.qt.io/Qt_5.9_Tools_and_Versions
-# Also git tag --points-at=HEAD --sort version:refname         doesn't work with git from Ubuntu 14.04 (unknown option --sort)
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/xenial.list && \
-    apt-get update && \
-    apt-get install -y libdbus-1-3 git
+# get linuxdeploy Qt plugin:
+RUN curl -4 -LO "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" && \
+    chmod +x linuxdeploy-plugin-qt-x86_64.AppImage && \
+    ./linuxdeploy-plugin-qt-x86_64.AppImage --appimage-extract && \
+    rm -f linuxdeploy-plugin-qt-x86_64.AppImage && \
+    mv squashfs-root linuxdeploy-plugin-qt-x86_64.AppDir
 
 COPY scripts /scripts

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# https://github.com/linuxdeploy/linuxdeploy-plugin-qt-examples/blob/master/build_appimages.sh
 set -e
 set -x
 set -u
@@ -14,7 +14,7 @@ LOWERAPP=${APP,,}
 BASE_PATH="$PWD/build-appimage"
 
 BUILD_DIR="$BASE_PATH/build-qmake-release"
-APPDIR="$BASE_PATH/$APP.AppDir/"
+APPDIR="$BASE_PATH/$APP.AppDir"
 
 # it's just 7 sec to re-create, and linuxdeploy fails if it's not clean
 rm -rf "$APPDIR"
@@ -37,12 +37,16 @@ cd $BASE_PATH
 export LD_LIBRARY_PATH="/opt/Qt/5.9.6/gcc_64/lib/:${LD_LIBRARY_PATH:-}"
 
 # Use appimage plugin to create .AppImage also: https://github.com/linuxdeploy/linuxdeploy-plugin-appimage
-~/linuxdeploy-x86_64.AppDir/AppRun --appdir "$APPDIR" --output appimage
+~/linuxdeploy-x86_64.AppDir/AppRun --app-name ${APP} --verbosity=0 --appdir "$APPDIR"
+~/linuxdeploy-plugin-qt-x86_64.AppDir/AppRun --appdir "$APPDIR"
 
 
-# FIXME: Qt plugins are not packed into
-# and PATH, LD_LIBRARY_PATH, QTDIR seems also to be not set.
-# TODO: read packing manual, see examples of Qt apps package
-# (when it's packed from .deb package in AppImage/AppImages .deb doesn't include Qt plugins, right?
-# TODO: read through https://github.com/AppImage/AppImageSpec/blob/master/draft.md
-# TODO: look through AppRun sources- does it setup this variables?
+# workaround: for some strange reasons moolticute.desktop and moolticute.svg are
+# turned into a self-symlink
+rm "$APPDIR/moolticute.desktop"
+cp "$APPDIR/usr/share/applications/moolticute.desktop" "$APPDIR/"
+
+rm "$APPDIR/moolticute.svg"
+cp "$APPDIR//usr/share/icons/hicolor/scalable/apps/moolticute.svg" "$APPDIR/"
+
+~/linuxdeploy-x86_64.AppDir/AppRun --app-name ${APP} --verbosity=0 --appdir "$APPDIR" --output appimage
