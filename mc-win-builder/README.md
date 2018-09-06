@@ -1,6 +1,6 @@
 # Moolticute docker for building windows release
 
-This docker is used by to build/package/upload moolticute for windows.
+This docker is used by to build/package moolticute for windows.
 
 # Usage
 
