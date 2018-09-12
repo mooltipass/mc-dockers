@@ -88,3 +88,6 @@ RUN curl -4 -LO "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/d
     mv squashfs-root linuxdeploy-plugin-qt-x86_64.AppDir
 
 COPY scripts /scripts
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
