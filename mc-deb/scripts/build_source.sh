@@ -35,6 +35,11 @@ then
     gpg --no-tty --passphrase-file /moolticute/passphrase.txt --allow-secret-key-import --import /moolticute/gpgkey_sec.asc
 fi
 
+function endsWith()
+{
+    case $2 in *"$1") true;; *) false;; esac;
+}
+
 gpg --list-keys
 gpg --list-secret-keys
 
@@ -67,7 +72,12 @@ pushd $WK
 cat *.changes
 
 echo Upload to PPA
-dput ppa:mooltipass/moolticute *.changes
+if endsWith -testing "$VERSION"
+then
+    dput ppa:mooltipass/moolticute-beta *.changes
+else
+    dput ppa:mooltipass/moolticute *.changes
+fi
 popd
 
 echo Source uploaded to launchpad
