@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
         libqt5websockets5-dev libusb-1.0-0-dev qt5-qmake qttools5-dev-tools pkg-config
 
 COPY scripts /scripts
+COPY dput.cf /home/ubuntu/.dput.cf
 
 COPY start.sh /
 ENTRYPOINT ["/start.sh"]

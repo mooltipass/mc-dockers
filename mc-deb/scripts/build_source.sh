@@ -72,11 +72,14 @@ pushd $WK
 cat *.changes
 
 echo Upload to PPA
+
+ssh-keyscan -p 22 -H ppa.launchpad.net >> $HOME/.ssh/known_hosts
+
 if endsWith -testing "$VERSION"
 then
-    dput ppa:mooltipass/moolticute-beta *.changes
+    dput mc-beta *.changes
 else
-    dput ppa:mooltipass/moolticute *.changes
+    dput mc *.changes
 fi
 popd
 

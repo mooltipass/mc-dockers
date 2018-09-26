@@ -1,0 +1,13 @@
+[mc]
+fqdn = ppa.launchpad.net
+method = sftp
+login = mooltipass
+incoming = ~mooltipass/ubuntu/moolticute/
+allow_unsigned_uploads = 0
+
+[mc-beta]
+fqdn = ppa.launchpad.net
+method = sftp
+login = mooltipass
+incoming = ~mooltipass/ubuntu/moolticute-beta/
+allow_unsigned_uploads = 0
