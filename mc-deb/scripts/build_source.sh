@@ -35,6 +35,10 @@ then
     gpg --no-tty --passphrase-file /moolticute/passphrase.txt --allow-secret-key-import --import /moolticute/gpgkey_sec.asc
 fi
 
+mkdir -p $HOME/.ssh
+cp /moolticute/ssh_launchpad.key $HOME/.ssh/id_rsa
+chmod 600 $HOME/.ssh -R
+
 function endsWith()
 {
     case $2 in *"$1") true;; *) false;; esac;
