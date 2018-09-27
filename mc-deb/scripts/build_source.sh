@@ -47,6 +47,7 @@ function endsWith()
 gpg --list-keys
 gpg --list-secret-keys
 
+VERSION_ORIG="$VERSION"
 VERSION="${VERSION}~${DISTRO}"
 WK=/work
 MCDIR=$(basename /moolticute/moolticute-*)
@@ -79,7 +80,7 @@ echo Upload to PPA
 
 ssh-keyscan -p 22 -H ppa.launchpad.net >> $HOME/.ssh/known_hosts
 
-if endsWith -testing "$VERSION"
+if endsWith -testing "$VERSION_ORIG"
 then
     dput mc-beta *.changes
 else
