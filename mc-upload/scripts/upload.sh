@@ -172,11 +172,15 @@ function endsWith()
     case $2 in *"$1") true;; *) false;; esac;
 }
 
+cd /uploads
+
 #Check if this is a test release or not
 if endsWith -testing "$VERSION"
 then
     mkdir -p $HOME/.ssh
     test -e $HOME/.ssh/known_hosts || ssh-keyscan -p 54433 -H mooltipass-tests.com >> $HOME/.ssh/known_hosts
+
+    UPJSON="updater.json"
 
     lftp -p 54433 sftp://${SFTP_USER}:${SFTP_PASS}@mooltipass-tests.com \
         -e "set sftp:auto-confirm yes; \
