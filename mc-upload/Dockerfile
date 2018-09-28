@@ -6,7 +6,7 @@ MAINTAINER Raoul Hecky "raoul.hecky@gmail.com"
 CMD ["/sbin/my_init"]
 
 RUN apt-get update -qq && \
-    apt-get install -y wget curl jq bash lftp openssh-client
+    apt-get install -y wget curl jq bash lftp openssh-client file
 
 RUN wget https://github.com/whiteinge/ok.sh/raw/master/ok.sh -O /usr/bin/ok.sh && \
     chmod +x /usr/bin/ok.sh
