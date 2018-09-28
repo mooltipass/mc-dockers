@@ -182,9 +182,11 @@ then
 
     UPJSON="updater.json"
 
-    lftp -p 54433 sftp://${SFTP_USER}:${SFTP_PASS}@mooltipass-tests.com \
-        -e "debug;
+    lftp -d -c \
+        "debug; \
+        set ssl:verify-certificate no; \
         set sftp:auto-confirm yes; \
+        open -p 54433 --user ${SFTP_USER} --password ${SFTP_PASS} sftp://mooltipass-tests.com; \
         cd mc_betas; \
         mkdir -p -f $VERSION; \
         cd $VERSION; \
