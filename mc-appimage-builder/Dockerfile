@@ -65,9 +65,24 @@ RUN groupadd -r ubuntu && useradd --create-home --gid ubuntu ubuntu && echo 'ubu
 # dirty hack. Probably it's better try to switch on rhel7 template which is officially supported by Qt 5.9.6:
 # https://wiki.qt.io/Qt_5.9_Tools_and_Versions
 # For QtDBus.so libdbus 1.3 is needed.
+#
+# Also, upgrade OpenSSL from 1.0.1f (ubuntu 14.04)   to  1.0.2g (ubuntu 16.04)
+# With version from Ubuntu 14.04 QSslSocket prints:
+#
+# WARNING: :0 - QSslSocket: cannot resolve SSL_set_alpn_protos
+# WARNING: :0 - QSslSocket: cannot resolve SSL_CTX_set_alpn_select_cb
+# WARNING: :0 - QSslSocket: cannot resolve SSL_get0_alpn_selected
+# - stil not prints it's not compatible, so seems OK, but:
+#
+# Updates checking in Moolticute doesn't work:
+#
+# INFO: :0 - Checking software updates from  "https://api.github.com/repos/mooltipass/moolticute/releases"
+# (then no output)
+#
+# TO CHECK: Maybe this is because the lack of "engines/" directory for libcrypto.
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ xenial main" > /etc/apt/sources.list.d/xenial.list && \
     apt-get update && \
-    apt-get install -y libdbus-1-3
+    apt-get install -y libdbus-1-3 libssl1.0.0
 
 
 # Inside Docker fuse mount will not work, so extract AppImages:
