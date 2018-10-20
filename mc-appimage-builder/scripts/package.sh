@@ -37,7 +37,7 @@ cd $BASE_PATH
 export LD_LIBRARY_PATH="/opt/Qt/5.9.6/gcc_64/lib/:${LD_LIBRARY_PATH:-}"
 
 # Use appimage plugin to create .AppImage also: https://github.com/linuxdeploy/linuxdeploy-plugin-appimage
-~/linuxdeploy-x86_64.AppDir/AppRun --app-name ${APP} --verbosity=0 --appdir "$APPDIR"
+~/linuxdeploy-x86_64.AppDir/AppRun --verbosity=0 --appdir "$APPDIR"
 ~/linuxdeploy-plugin-qt-x86_64.AppDir/AppRun --appdir "$APPDIR"
 
 
@@ -49,4 +49,4 @@ cp "$APPDIR/usr/share/applications/moolticute.desktop" "$APPDIR/"
 rm "$APPDIR/moolticute.svg"
 cp "$APPDIR//usr/share/icons/hicolor/scalable/apps/moolticute.svg" "$APPDIR/"
 
-~/linuxdeploy-x86_64.AppDir/AppRun --app-name ${APP} --verbosity=0 --appdir "$APPDIR" --output appimage
+~/linuxdeploy-x86_64.AppDir/AppRun --verbosity=0 --appdir "$APPDIR" --output appimage
