@@ -74,7 +74,9 @@ if [ -n "$SHLIB_VERSION_NUMBER" ] ; then
     ln -s "libcrypto.so.1.0.0" "$APPDIR/usr/lib/libcrypto.so.${SHLIB_VERSION_NUMBER}"
 fi
 
-
+# Also get OpenSSL config:
+mkdir -p "$APPDIR/usr/lib/ssl/"
+cp "/usr/lib/ssl/openssl.cnf" "$APPDIR/usr/lib/ssl"
 
 
 # Use appimage plugin to create .AppImage also: https://github.com/linuxdeploy/linuxdeploy-plugin-appimage
