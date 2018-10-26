@@ -39,6 +39,8 @@ for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/qt5/bin/Qt5WebSockets.dll \
          $MXE_BIN/qt5/plugins/imageformats \
          $MXE_BIN/qt5/plugins/platforms \
+         $build_dir/release/SnoreToast.exe \
+         $build_dir/release/icon.png \
          $build_dir/release/moolticute.exe \
          $build_dir/release/moolticuted.exe
 do
