@@ -25,10 +25,9 @@ wget_retry https://calaos.fr/mooltipass/tools/windows/mc-cli.exe -O $WDIR/mc-cli
 for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/bin/libstdc++-6.dll \
          $MXE_BIN/bin/libwinpthread-1.dll \
-         $MXE_BIN/bin/libwebp-5.dll \
+         $MXE_BIN/bin/libcrypto-1_1.dll \
+         $MXE_BIN/bin/libssl-1_1.dll \
          $MXE_BIN/bin/zlib1.dll \
-         $MXE_BIN/bin/ssleay32.dll \
-         $MXE_BIN/bin/libeay32.dll \
          $MXE_BIN/bin/icudt56.dll \
          $MXE_BIN/bin/icuin56.dll \
          $MXE_BIN/bin/icuuc56.dll \
@@ -39,8 +38,9 @@ for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/qt5/bin/Qt5WebSockets.dll \
          $MXE_BIN/qt5/plugins/imageformats \
          $MXE_BIN/qt5/plugins/platforms \
-         $build_dir/release/SnoreToast.exe \
-         $build_dir/release/icon.png \
+         $MXE_BIN/qt5/plugins/styles \
+         /moolticute/win/snoretoast/SnoreToast.exe \
+         /moolticute/win/snoretoast/icon.png \
          $build_dir/release/moolticute.exe \
          $build_dir/release/moolticuted.exe
 do
