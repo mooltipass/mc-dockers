@@ -43,8 +43,9 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     libxrender1 \
     libfontconfig1 \
     libdbus-1-3 \
-    libusb-1.0-0-dev \
-    libxi6
+    libudev-dev \
+    libxi6 \
+    wget
 
 
 COPY extract-qt-installer.sh /tmp/qt/
