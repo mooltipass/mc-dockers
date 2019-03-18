@@ -1,4 +1,5 @@
-# Official Qt installer is based on https://github.com/rabits/dockerfiles
+# Install official Qt's binary build using https://github.com/benlau/qtci
+# Examples of how to use it: https://github.com/rabits/dockerfiles
 
 FROM ubuntu:14.04
 
@@ -43,18 +44,20 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     libxrender1 \
     libfontconfig1 \
     libdbus-1-3 \
-    libusb-1.0-0-dev \
-    libxi6
+    libudev-dev \
+    libxi6 \
+    unzip \
+    wget
 
+RUN curl -4 -Lo qtci.zip  https://github.com/benlau/qtci/archive/master.zip \
+    && unzip qtci.zip \
+    && rm qtci.zip \
+    && chmod +x qtci-master/recipes/install-qt \
+    && chmod +x qtci-master/recipes/install-qt-online \
+    && chmod +x qtci-master/bin/extract-qt-installer
 
-COPY extract-qt-installer.sh /tmp/qt/
-
-# Download & unpack Qt toolchains & clean
-# Note curl -4 option: this is workaround for 'unable to resolve host' in ubuntu:14.04 container
-RUN curl -4 -Lo /tmp/qt/installer.run "https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run" \
-    && QT_CI_PACKAGES=qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 /tmp/qt/extract-qt-installer.sh /tmp/qt/installer.run "$QT_PATH" \
-    && find "$QT_PATH" -mindepth 1 -maxdepth 1 ! -name "${QT_VERSION}" -exec echo 'Cleaning Qt SDK: {}' \; -exec rm -r '{}' \; \
-    && rm -rf /tmp/qt
+RUN env VERBOSE=true PATH=$PATH:qtci-master/bin:qtci-master/recipes \
+    install-qt-online qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 "/opt"
 
 # Reconfigure locale
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
