@@ -47,3 +47,12 @@ Now it's time to start the build for all ubuntu version you need:
 
 Sources packages (*.changes) and sources are uploaded to launchpad automatically
 
+# Building and Uploading the Docker Image
+
+```bash
+➜ docker image build -t mc-launchpad:latest .
+➜ docker images
+➜ docker image tag mc-launchpad:latest mooltipass/mc-launchpad:latest
+➜ docker image push mooltipass/mc-launchpad:latest
+[...]
+```
