@@ -64,7 +64,7 @@ rm -f $WKMC/debian/changelog
 
 echo Update changelog
 pushd $WKMC
-DEBEMAIL="Mooltipass Team <support@themooltipass.com>" dch --create --package moolticute --distribution $DISTRO --newversion $DEB_VERSION "Release $DEB_VERSION"
+DEBEMAIL="Mooltipass Team <support@themooltipass.com>" dch --force-bad-version --create --package moolticute --distribution $DISTRO --newversion $DEB_VERSION "Release $DEB_VERSION"
 cat debian/changelog
 popd
 
