@@ -49,7 +49,7 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     unzip \
     wget
 
-RUN curl -4 -Lo qtci.zip  https://github.com/benlau/qtci/archive/master.zip \
+RUN curl -4 -Lo qtci.zip  https://github.com/tsteven4/qtci/archive/isolate2.zip \
     && unzip qtci.zip \
     && rm qtci.zip \
     && chmod +x qtci-master/recipes/install-qt \
