@@ -52,11 +52,11 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
 RUN curl -4 -Lo qtci.zip  https://github.com/tsteven4/qtci/archive/isolate2.zip \
     && unzip qtci.zip \
     && rm qtci.zip \
-    && chmod +x qtci-master/recipes/install-qt \
-    && chmod +x qtci-master/recipes/install-qt-online \
-    && chmod +x qtci-master/bin/extract-qt-installer
+    && chmod +x qtci-isolate2/recipes/install-qt \
+    && chmod +x qtci-isolate2/recipes/install-qt-online \
+    && chmod +x qtci-isolate2/bin/extract-qt-installer
 
-RUN env VERBOSE=true PATH=$PATH:qtci-master/bin:qtci-master/recipes \
+RUN env VERBOSE=true PATH=$PATH:qtci-isolate2/bin:qtci-isolate2/recipes \
     install-qt-online qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 "/opt"
 
 # Reconfigure locale
