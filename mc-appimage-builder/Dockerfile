@@ -46,6 +46,7 @@ RUN apt update && apt full-upgrade -y && apt install -y --no-install-recommends 
     libdbus-1-3 \
     libudev-dev \
     libxi6 \
+    libxkbcommon-x11-0 \
     unzip \
     wget
 
