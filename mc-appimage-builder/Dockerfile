@@ -61,7 +61,7 @@ RUN curl -4 -Lo qtci.zip  https://github.com/tsteven4/qtci/archive/isolate2.zip 
     && sed -i 's/if (installer.isOfflineOnly()) {/if (installer.isOfflineOnly() || true) {'/g qtci-isolate2/bin/qt-install.qs
 
 RUN env VERBOSE=true PATH=$PATH:qtci-isolate2/bin:qtci-isolate2/recipes \
-    install-qt-online qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 "/opt"
+    install-qt-online qt.qt5.$(echo "${QT_VERSION}" | tr -d .).gcc_64 "/opt"
 
 # Reconfigure locale
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
