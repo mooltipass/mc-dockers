@@ -20,7 +20,7 @@ APPDIR="$BASE_PATH/$APP.AppDir"
 rm -rf "$APPDIR"
 rm -f  "$BASE_PATH/Moolticute-x86_64.AppImage"
 
-( cd $BUILD_DIR ; mv src/version.h_appimage src/version.h ; make install INSTALL_ROOT=$APPDIR )
+( mv src/version.h_appimage src/version.h ; cd $BUILD_DIR ; make install INSTALL_ROOT=$APPDIR )
 
 cp data/moolticute.sh "$APPDIR/usr/bin/"
 sed -i 's#Exec=/usr/bin/moolticute#Exec=moolticute.sh#g' "$APPDIR/usr/share/applications/moolticute.desktop"
