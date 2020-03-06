@@ -7,9 +7,11 @@ MAINTAINER Alexander Sashnov "sashnov@ngs.ru"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV QT_VERSION  5.9.6
+ENV QT_VERSION  5.12.7
 ENV QT_PATH /opt/Qt
 ENV QT_DESKTOP $QT_PATH/${QT_VERSION}/gcc_64
+ENV QT_CI_LOGIN FILLME@mailsy.top 
+ENV QT_CI_PASSWORD FILLME@mailsy.top 
 
 ENV PATH    $QT_DESKTOP/bin:$PATH
 ENV HOME    /home/ubuntu
@@ -55,7 +57,8 @@ RUN curl -4 -Lo qtci.zip  https://github.com/tsteven4/qtci/archive/isolate2.zip 
     && rm qtci.zip \
     && chmod +x qtci-isolate2/recipes/install-qt \
     && chmod +x qtci-isolate2/recipes/install-qt-online \
-    && chmod +x qtci-isolate2/bin/extract-qt-installer
+    && chmod +x qtci-isolate2/bin/extract-qt-installer \
+    && sed -i 's/if (installer.isOfflineOnly()) {/if (installer.isOfflineOnly() || true) {'/g qtci-isolate2/bin/qt-install.qs
 
 RUN env VERBOSE=true PATH=$PATH:qtci-isolate2/bin:qtci-isolate2/recipes \
     install-qt-online qt.$(echo "${QT_VERSION}" | tr -d .).gcc_64 "/opt"
