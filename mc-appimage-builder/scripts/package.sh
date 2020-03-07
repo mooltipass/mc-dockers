@@ -20,7 +20,7 @@ export ARCH=$(arch)
 APP=moolticute
 LOWERAPP=${APP,,}
 
-VERSION="$(get_version .)"
+export VERSION="$(get_version .)"
 
 BASE_PATH="$PWD/build-appimage"
 
