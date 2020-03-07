@@ -4,12 +4,23 @@ set -e
 set -x
 set -u
 
+#Usage: get_version /path/to/repo
+function get_version()
+{
+    repo=$1
+    pushd $repo > /dev/null
+    git describe --tags --abbrev=0
+    popd > /dev/null
+}
+
 cd /moolticute
 
 export ARCH=$(arch)
 
 APP=moolticute
 LOWERAPP=${APP,,}
+
+VERSION="$(get_version .)"
 
 BASE_PATH="$PWD/build-appimage"
 
