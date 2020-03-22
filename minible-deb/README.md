@@ -15,11 +15,15 @@ Status: Image is up to date for mooltipass/minible-launchpad:latest
 
 Clone the minible source repository somewhere on you hdd. You will also need to put the GPG key files in this folder.
 ```bash
-➜ mkdir workdir && cd workdir
+➜ mkdir minible && cd minible
+➜ gpg --full-gen-key
+➜ gpg --armor --export user-id > gpgkey_pub.asc
+➜ gpg --export-secret-keys --armor user-id > gpgkey_sec.asc
+➜ echo "mypassword" > passphrase.txt
+➜ touch ssh_launchpad.key
 ➜ git clone https://github.com/mooltipass/minible minible-1.2.3
-➜ touch gpgkey_pub.asc  # public gpg key
-➜ touch gpgkey_sec.asc  # private key
-➜ touch passphrase.txt  # passphrase for the secret key
+➜ cd minible-1.2.3
+➜ git submodule update --init --recursive
 ```
 
 Then you need to tell docker where to map the source code of minible.
@@ -55,4 +59,10 @@ Sources packages (*.changes) and sources are uploaded to launchpad automatically
 ➜ docker image tag minible-launchpad:latest mooltipass/minible-launchpad:latest
 ➜ docker image push mooltipass/minible-launchpad:latest
 [...]
+```
+
+# One Liner for Easy Development
+
+```bash
+➜ docker stop minible-deb ; docker rm minible-deb ; docker image build -t minible-launchpad:latest . ; docker run -t --name minible-deb -d -v /home/limpkin/minible:/minible minible-launchpad; docker exec minible-deb bash /scripts/build_source.sh 1.2.3 bionic
 ```
