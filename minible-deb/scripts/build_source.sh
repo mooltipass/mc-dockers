@@ -52,7 +52,7 @@ VERSION="${VERSION}~${DISTRO}"
 WK=/work
 MCDIR=$(basename /minible/minible-*)
 WKMC=$WK/$MCDIR/source_code/main_mcu
-KEYID="6A270B4394A56AD91FCF7B975806858045DE5C23"
+KEYID="3323499F404BC7DA1FF9182400133EAEC17223A1"
 GPG_PROG="gpg --passphrase-file /minible/passphrase.txt --no-tty"
 DEB_VERSION=$(echo ${VERSION} | tr 'v' ' ' | xargs)
 
