@@ -61,6 +61,8 @@ rm -fr $WK/*
 mkdir -p $WK
 cp -R /minible/$MCDIR $WK/
 rm -f $WKMC/debian/changelog
+rm -f $WKMC/Makefile
+mv $WKMC/Makefile.emu $WKMC/Makefile
 
 echo Update changelog
 pushd $WKMC
