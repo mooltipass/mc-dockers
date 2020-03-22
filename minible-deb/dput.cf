@@ -1,0 +1,13 @@
+[minible]
+fqdn = ppa.launchpad.net
+method = sftp
+login = mooltipass
+incoming = ~mooltipass/ubuntu/minible/
+allow_unsigned_uploads = 0
+
+[minible-beta]
+fqdn = ppa.launchpad.net
+method = sftp
+login = mooltipass
+incoming = ~mooltipass/ubuntu/minible-beta/
+allow_unsigned_uploads = 0
