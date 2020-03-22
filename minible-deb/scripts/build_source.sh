@@ -51,7 +51,7 @@ VERSION_ORIG="$VERSION"
 VERSION="${VERSION}~${DISTRO}"
 WK=/work
 MCDIR=$(basename /minible/minible-*)
-WKMC=$WK/$MCDIR/source_code/main_mcu
+WKMC=$WK/$MCDIR
 KEYID="3323499F404BC7DA1FF9182400133EAEC17223A1"
 GPG_PROG="gpg --passphrase-file /minible/passphrase.txt --no-tty"
 DEB_VERSION=$(echo ${VERSION} | tr 'v' ' ' | xargs)
@@ -59,7 +59,7 @@ DEB_VERSION=$(echo ${VERSION} | tr 'v' ' ' | xargs)
 rm -fr $WK/*
 
 mkdir -p $WK
-cp -R /minible/$MCDIR $WK/
+cp -R /minible/$MCDIR/source_code/main_mcu $WK/$MCDIR
 rm -f $WKMC/debian/changelog
 rm -f $WKMC/Makefile
 mv $WKMC/Makefile.emu $WKMC/Makefile
