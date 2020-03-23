@@ -22,6 +22,10 @@ cd $build_dir/..
 wget_retry https://calaos.fr/mooltipass/tools/windows/mc-agent.exe -O $WDIR/mc-agent.exe
 wget_retry https://calaos.fr/mooltipass/tools/windows/mc-cli.exe -O $WDIR/mc-cli.exe
 
+#Get emulator
+curl -s https://api.github.com/repos/mooltipass/minible/releases/latest | grep "browser_download_url.*exe" | cut -d : -f 2,3 | tr -d \" | wget -i - -O $WDIR/minible_emu.exe
+curl -s https://api.github.com/repos/mooltipass/minible/releases/latest | grep "browser_download_url.*img" | cut -d : -f 2,3 | tr -d \" | wget -i - -O $WDIR/miniblebundle.img
+
 for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/bin/libstdc++-6.dll \
          $MXE_BIN/bin/libwinpthread-1.dll \
