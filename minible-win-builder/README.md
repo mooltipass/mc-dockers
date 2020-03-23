@@ -47,3 +47,9 @@ And finally to create the packages:
 ```
 
 Packages are now available in your minible source dir (in the packages folder)
+
+
+# One Liner for Easy Development
+
+```bash
+➜ docker stop miniblebuilder ; docker rm miniblebuilder ; docker image build -t minible-win-builder:latest . ; docker run -t --name miniblebuilder -d -v /home/limpkin/minible/minible:/minible minible-win-builder; docker exec miniblebuilder /bin/bash /scripts/build.sh
