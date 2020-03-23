@@ -48,6 +48,15 @@ And finally to create the packages:
 
 Packages are now available in your minible source dir (in the packages folder)
 
+# Building and Uploading the Docker Image
+
+```bash
+➜ docker image build -t minible-win-builder:latest .
+➜ docker images
+➜ docker image tag minible-win-builder:latest mooltipass/minible-win-builder:latest
+➜ docker image push mooltipass/minible-win-builder:latest
+[...]
+```
 
 # One Liner for Easy Development
 
