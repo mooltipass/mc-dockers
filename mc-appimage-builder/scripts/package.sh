@@ -36,6 +36,15 @@ rm -f  "$BASE_PATH/Moolticute-x86_64.AppImage"
 cp data/moolticute.sh "$APPDIR/usr/bin/"
 sed -i 's#Exec=/usr/bin/moolticute#Exec=moolticute.sh#g' "$APPDIR/usr/share/applications/moolticute.desktop"
 
+# TODO: download CI builds when they became available from upstreams:
+#  https://github.com/raoulh/mc-agent/releases
+#  https://github.com/raoulh/mc-cli/releases
+curl -4 https://calaos.fr/mooltipass/tools/linux/mc-agent -o "$APPDIR/usr/bin/mc-agent"
+chmod +x "$APPDIR/usr/bin/mc-agent"
+
+curl -4 https://calaos.fr/mooltipass/tools/linux/mc-cli -o "$APPDIR/usr/bin/mc-cli"
+chmod +x "$APPDIR/usr/bin/mc-cli"
+
 cd $BASE_PATH
 
 # Example on how to use linuxdeploy Qt plugin properly:
@@ -101,6 +110,6 @@ rm "$APPDIR/moolticute.desktop"
 cp "$APPDIR/usr/share/applications/moolticute.desktop" "$APPDIR/"
 
 rm "$APPDIR/moolticute.svg"
-cp "$APPDIR//usr/share/icons/hicolor/scalable/apps/moolticute.svg" "$APPDIR/"
+cp "$APPDIR/usr/share/icons/hicolor/scalable/apps/moolticute.svg" "$APPDIR/"
 
 ~/linuxdeploy-x86_64.AppDir/AppRun --verbosity=0 --appdir "$APPDIR" --output appimage
