@@ -6,7 +6,7 @@ SCRIPTDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $SCRIPTDIR/funcs.sh
 
 build_dir=/moolticute/build_win
-MXE_BIN=$HOME/mxe/usr/i686-w64-mingw32.shared.posix
+MXE_BIN=/mxe/usr/i686-w64-mingw32.shared.posix
 WDIR=$HOME/.wine/drive_c/moolticute_build
 PKDIR=/moolticute/packages
 mkdir -p $PKDIR
@@ -31,10 +31,11 @@ for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/bin/libwinpthread-1.dll \
          $MXE_BIN/bin/libcrypto-1_1.dll \
          $MXE_BIN/bin/libssl-1_1.dll \
+         $MXE_BIN/bin/libzstd.dll \
          $MXE_BIN/bin/zlib1.dll \
-         $MXE_BIN/bin/icudt56.dll \
-         $MXE_BIN/bin/icuin56.dll \
-         $MXE_BIN/bin/icuuc56.dll \
+         $MXE_BIN/bin/icudt66.dll \
+         $MXE_BIN/bin/icuin66.dll \
+         $MXE_BIN/bin/icuuc66.dll \
          $MXE_BIN/qt5/bin/Qt5Core.dll \
          $MXE_BIN/qt5/bin/Qt5Gui.dll \
          $MXE_BIN/qt5/bin/Qt5Network.dll \
@@ -57,8 +58,7 @@ pushd win
 
 echo "#define MyAppVersion \"$VERSION\"" > build.iss
 cat installer.iss >> build.iss
-chmod +x iscc
-./iscc build.iss
+iscc build.iss
 
 sign_binary build/$FILENAME.exe
 mv build/$FILENAME.exe $PKDIR

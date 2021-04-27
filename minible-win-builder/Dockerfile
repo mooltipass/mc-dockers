@@ -1,27 +1,15 @@
-FROM ubuntu:18.04
+FROM calaos/winbuilder:latest
 
 MAINTAINER Raoul Hecky "raoul.hecky@gmail.com"
 
-ENV DEBIAN_FRONTEND noninteractive
-
-ENV HOME /home/ubuntu
-RUN mkdir -p $HOME
-
-#required packages
-RUN dpkg --add-architecture i386 && \
-    apt-get update -qq && \
-    apt-get install -y build-essential wget git curl software-properties-common wine-stable wine32 unzip zip
-
-#mingw+qt toolchain
-RUN cd $HOME && \
-    wget https://calaos.fr/download/misc/mxe_qt5121.tar.xz && \
-    tar xJf mxe_qt5121.tar.xz
+#codesign
+RUN cd /work && wget https://github.com/mooltipass/osslsigncode/releases/download/1.7.1/osslsigncode_amd64.tar.xz && \
+    tar xJvf osslsigncode_amd64.tar.xz && rm osslsigncode_amd64.tar.xz && \
+    chmod +x osslsigncode && \
+    sudo mv osslsigncode /usr/bin
 
 COPY scripts /scripts
 
 COPY start.sh /
 ENTRYPOINT ["/start.sh"]
 CMD ["/start"]
-
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

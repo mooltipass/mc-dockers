@@ -2,8 +2,8 @@
 
 set -ev
 
-PATH=$HOME/mxe/usr/bin:$PATH
-MXE_BASE=$HOME/mxe
+PATH=/mxe/usr/bin:$PATH
+MXE_BASE=/mxe
 build_dir=/minible/build_win
 output_dir=/minible/output
 
