@@ -10,6 +10,7 @@ RUN cd /work && wget https://github.com/mooltipass/osslsigncode/releases/downloa
 
 COPY scripts /scripts
 
-COPY start.sh /
-ENTRYPOINT ["/start.sh"]
-CMD ["/start"]
+#Map uid/gid to travis-ci
+RUN sudo groupmod -g 2000 xusers && \
+    sudo usermod -u 2000 -g 2000 xclient
+

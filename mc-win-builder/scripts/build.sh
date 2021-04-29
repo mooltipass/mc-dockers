@@ -6,6 +6,8 @@ PATH=/mxe/usr/bin:$PATH
 MXE_BASE=/mxe
 build_dir=/moolticute/build_win
 
+ls -l /moolticute
+
 #get snoretoast.exe
 wget https://github.com/mooltipass/snoretoast/releases/download/v0.6.0/SnoreToast.exe -O /moolticute/win/snoretoast/SnoreToast.exe
 
