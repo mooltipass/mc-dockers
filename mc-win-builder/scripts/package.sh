@@ -15,12 +15,12 @@ cd /moolticute
 VERSION="$(get_version .)"
 FILENAME=moolticute_setup_$VERSION
 
-mkdir -p $WDIR
+mkdir -p $WDIR/cli
 cd $build_dir/..
 
 #Get 3rd party tools
-wget_retry https://calaos.fr/mooltipass/tools/windows/mc-agent.exe -O $WDIR/mc-agent.exe
-wget_retry https://calaos.fr/mooltipass/tools/windows/mc-cli.exe -O $WDIR/mc-cli.exe
+wget_retry https://calaos.fr/mooltipass/tools/windows/mc-agent.exe -O $WDIR/cli/mc-agent.exe
+wget_retry https://calaos.fr/mooltipass/tools/windows/mc-cli.exe -O $WDIR/cli/mc-cli.exe
 
 #Get emulator
 wget_retry https://github.com/mooltipass/minible/releases/latest/download/minible_emu.exe -O $WDIR/minible_emu.exe
