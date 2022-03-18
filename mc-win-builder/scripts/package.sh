@@ -29,21 +29,23 @@ wget_retry https://github.com/mooltipass/minible/releases/latest/download/minibl
 for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/bin/libstdc++-6.dll \
          $MXE_BIN/bin/libwinpthread-1.dll \
-         $MXE_BIN/bin/libcrypto-1_1.dll \
-         $MXE_BIN/bin/libssl-1_1.dll \
+         $MXE_BIN/bin/libcrypto-3.dll \
+         $MXE_BIN/bin/libssl-3.dll \
          $MXE_BIN/bin/libzstd.dll \
          $MXE_BIN/bin/zlib1.dll \
-         $MXE_BIN/bin/icudt66.dll \
-         $MXE_BIN/bin/icuin66.dll \
-         $MXE_BIN/bin/icuuc66.dll \
-         $MXE_BIN/qt5/bin/Qt5Core.dll \
-         $MXE_BIN/qt5/bin/Qt5Gui.dll \
-         $MXE_BIN/qt5/bin/Qt5Network.dll \
-         $MXE_BIN/qt5/bin/Qt5Widgets.dll \
-         $MXE_BIN/qt5/bin/Qt5WebSockets.dll \
-         $MXE_BIN/qt5/plugins/imageformats \
-         $MXE_BIN/qt5/plugins/platforms \
-         $MXE_BIN/qt5/plugins/styles \
+         $MXE_BIN/bin/icudt70.dll \
+         $MXE_BIN/bin/icuin70.dll \
+         $MXE_BIN/bin/icuuc70.dll \
+         $MXE_BIN/bin/libpng16-16.dll \
+         $MXE_BIN/bin/libjpeg-9.dll \
+         $MXE_BIN/qt6/bin/Qt6Core.dll \
+         $MXE_BIN/qt6/bin/Qt6Gui.dll \
+         $MXE_BIN/qt6/bin/Qt6Network.dll \
+         $MXE_BIN/qt6/bin/Qt6Widgets.dll \
+         $MXE_BIN/qt6/bin/Qt6WebSockets.dll \
+         $MXE_BIN/qt6/plugins/imageformats \
+         $MXE_BIN/qt6/plugins/platforms \
+         $MXE_BIN/qt6/plugins/styles \
          /moolticute/win/snoretoast/SnoreToast.exe \
          /moolticute/win/snoretoast/icon.png \
          $build_dir/release/moolticute.exe \

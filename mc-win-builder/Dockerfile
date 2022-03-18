@@ -1,4 +1,4 @@
-FROM calaos/winbuilder:latest
+FROM raoulh/mxe_qt6:qt6.2.3
 
 MAINTAINER Raoul Hecky "raoul.hecky@gmail.com"
 
