@@ -1,12 +1,10 @@
-FROM calaos/winbuilder:latest
+FROM raoulh/mxe_qt6:qt6.2.3
 
 MAINTAINER Raoul Hecky "raoul.hecky@gmail.com"
 
 #codesign
-RUN cd /work && wget https://github.com/mooltipass/osslsigncode/releases/download/1.7.1/osslsigncode_amd64.tar.xz && \
-    tar xJvf osslsigncode_amd64.tar.xz && rm osslsigncode_amd64.tar.xz && \
-    chmod +x osslsigncode && \
-    sudo mv osslsigncode /usr/bin
+RUN sudo apt update && sudo apt-get --no-install-recommends -y install \
+    osslsigncode
 
 COPY scripts /scripts
 
