@@ -1,4 +1,4 @@
-FROM raoulh/mxe_qt6:qt6.2.3
+FROM raoulh/mxe_qt6:qt6.2.4
 
 MAINTAINER Raoul Hecky "raoul.hecky@gmail.com"
 
