@@ -46,6 +46,7 @@ for f in $MXE_BIN/bin/libgcc_s_sjlj-1.dll \
          $MXE_BIN/qt6/plugins/imageformats \
          $MXE_BIN/qt6/plugins/platforms \
          $MXE_BIN/qt6/plugins/styles \
+         $MXE_BIN/qt6/plugins/tls \
          /moolticute/win/snoretoast/SnoreToast.exe \
          /moolticute/win/snoretoast/icon.png \
          $build_dir/release/moolticute.exe \
